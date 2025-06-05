@@ -25,20 +25,28 @@ For the Angle application, we believe the future of web applications starts with
 </p>
   
 <h2 align="left"> What stage are you?  </h2>
-
 <p style="width:75%">
-We’ve built a vertical application with UX, graphs, widgets, data-bases, search, crawlers. We are now building the AI horizontal infra. The first version of the product consists of two LLM scoring play-grounds, one for UX/front end, for reasoning LLMs to author UX interfaces on the fly either in conversation or customize what the user sees. The second play-ground is used to teach LLMs to reason and call microservice interfaces, such as get data, search, store data, parse and interpret. Put together, a vertical application is built and highly customizable by the user through the agentic AI system. 
-</p> 
+We have built the Reinforcement Learning Models for US equity, and it has been put into the production system for 2 months. The system takes in public exchange data (price, volumne), news, macro-economic indicators, and social network information to understand the impact of action taking in the financial market. 
+</p>
 <p style="width:75%">
-Our approach is build a ‘lego world’ for AI. This ‘lego world’ is composed of front end user UX and distributed data systems. In both worlds, we work with excellent engineers to design reliable, versatile, effective lego blocks (widgets) for AI to understand, manipulate, and customize.
+Without a deep Reinforcement Learning Model, we found a generative LLM model will be more likely to halucinate or dabble about investing, because it does not take into account of penalties and rewards of taking real market actions. In an extremely noisy environment like financial news, markets, even at the company reports level, it is our view a foundational Reinforcement Learning model is the way to go in the next 5-10 years for financial intelligence. 
+</p>
+<p style="width:75%">
+We've created a parsed data-base of all SEC filings, and are fine-tuning and aligning an genAI LLM model. This model is planned to be integrated with forecasting and RL models for global financial intelligence. 
+</p>   
+<p style="width:75%">
+For the Angle application, we’ve built a vertical application with UX, graphs, widgets, data-bases, search, crawlers. We are now building the AI horizontal infra. The first version of the product consists of two LLM scoring play-grounds, one for UX/front end, for reasoning LLMs to author UX interfaces on the fly either in conversation or customize what the user sees. The second play-ground is used to teach LLMs to reason and call microservice interfaces, such as get data, search, store data, parse and interpret. Put together, a vertical application is built and highly customizable by the user through the AI system. Our approach is build a ‘lego world’ for AI. This ‘lego world’ is composed of front end user UX and distributed data systems. In both worlds, we work with excellent engineers to design reliable, versatile, effective lego blocks (widgets) for AI to understand, manipulate, and customize.
 </p> 
 
+<h3 align="left">FinHulk</h3>
+When FinHulk makes smashes, 
+ 
 <h3 align="left">Sophon</h3>
 <p style="width:75%">
 Sophon is the agent that determines what users see. We use Sophon to discover, show interactive interfaces, run programs, and adapt to user's preference.
 </p> 
 <p style="width:75%">
-For a demo of Sophon on mobile, we show a financial advisor system. The user experience is defined by generative AI. When user inputs the prompt, the generative AI interprets the request, and calls relevant UX, backend components to offer a comprehensive response. The interface is customized to and steerable by the user. In this example, a interactive stock chart was loaded, a browser was loaded to look for information for CEO's, and a pdf viewer together with back-end database was called to display financial reports of the companies asked. Sophon is a system platform that allows services, systems, interfaces to be operable and steerable. 
+For a demo of Sophon on mobile, we show a financial chat system. The user experience is defined by generative AI. When user inputs the prompt, the generative AI interprets the request, and calls relevant UX, backend components to offer a comprehensive response. The interface is customized to and steerable by the user. In this example, a interactive stock chart was loaded, a browser was loaded to look for information for CEO's, and a pdf viewer together with back-end database was called to display financial reports of the companies asked. Sophon is a system platform that allows services, systems, interfaces to be operable and steerable. 
 </p> 
   <iframe width="1120" height="630" src="https://www.youtube.com/embed/_Y21mgzkA1U?si=ydHNIiXAGxWLj_hr" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
@@ -56,18 +64,21 @@ curl -X POST http://54.148.152.214:8000/weaver -H "Content-Type: application/jso
 
 <h2 align="left"> Why you?  </h2>
 <p style="width:75%">
-  We have the technology to generate insights from publich financial data through LLM. We have the deep RL technology to generate reveune and offer investment insights. We plan hire AI, infra and product experts. 
+We have the technology to build deep Foundational AI models from publich financial data. We have the deep RL technology to generate reveune and offer investment insights. We are advised by top academics and finance industry experts, and plan to hire AI, infra and product engineering experts. 
 </p> 
 
 <h2 align="left">  Why now? </h2>
 <p style="width:75%"> 
-It is prime time to launch Angle. LLM foundational model companies (openAI, anthropic, perplexity) are focusing on model development, architecture, 2C user experience. Larger corporations are building custom implementation in their products, which have limited success. However, there is significant market demand from all the rest of the world, who only have access to e.g. chatGPT api, and no internal infra, especially a feasible guideline or handbook to implement their AI application. We provide the applicatin for every house hold to access financial information, and speak with generative AI which access all of public data and generate UX elements. It's time to make investing fair for all houshold investors. 
+It is prime time to launch Angle. There is no significant force to build a Reinforcement Learning Foundational Model for finance. Individual investors and households have been deprived of public financial intelligence for too long. Hedge Funds, financial institutions, large banks are playing catchup even with LLM foundational model companies (openAI, anthropic, perplexity) are focusing on model development, architecture, 2C user experience. Larger corporations are building custom implementation in their products, which have limited success. However, there is significant market demand from all the rest of the world, who only have access to e.g. chatGPT api, and no internal infra, especially a feasible guideline or handbook to implement their AI application. We provide the applicatin for every house hold to access financial information, and speak with generative AI which access all of public data and generate UX elements. It's time to make investing fair for all houshold investors. 
 </p>
 
 <h2 align="left"> Customers </h2>
 <p style="width:75%"> 
-Enterprises and institutions - enterprise technical teams will support corporation internal teams to leverage the latest GenAI/deepRL infra technology. We focus on investor serving enterprises like wealth management firms and retirement funds. Angle provide the teams, technical expertise for key enterprise customers to ensure their success, both for equity selection and for customer facing applications. 
+Enterprises and institutions - enterprise technical teams will support corporation internal teams to leverage the latest deepRL/GenAI infra technology. We focus on investor serving enterprises like wealth management firms and retirement funds. Angle provide the teams, technical expertise for key enterprise customers to ensure their success, both for equity selection and for customer facing applications. 
 </p>
 <p style="width:75%"> 
-Personal - subscription. Anyone can be enabled by Angle to be informed of the investment world, deep RL insights, and make the right decisions with their money. 
+Household - subscription. Anyone can be enabled by Angle to be informed of the investment world, deep RL insights, and make the best decisions with their money. 
+</p>
+<p style="width:75%"> 
+Rewards - points like system when household put their money on Angle fund, they can be exchanged for household items the atomic family really needs, children's books, a playset, a bike, a computer. 
 </p>
