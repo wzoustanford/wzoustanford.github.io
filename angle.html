@@ -40,8 +40,23 @@ For the Angle application, we’ve built a vertical application with UX, graphs,
 </p> 
 
 <h3 align="left">Reinforcement Learning Foundational Model</h3>
-[to implement]
- 
+<p style="width:75%">
+We build a Reinforcement Learning model and a machine learning infrastructure to support this foundation model. Why do we build an ML infra for RL? 
+</p> 
+
+<p style="width:75%">
+Interested in the RL algorithms we use? We are serious and actively working on research. Two of the principles we use in <href="https://ai.stanford.edu/~wzou/hcl_kdd_2024_submitted.pdf">this paper</href> and <href="https://ai.stanford.edu/~wzou/scpm.pdf">this one</href>. 
+</p> 
+
+<p style="width:75%">
+[High calibre decisions and statistical significance] The ML iterations are more frequent and more intense for financial data. This is because the impact of each decision carry a high value, and a less competent model or a even a less interpretable model is constantly under scrutiny. The second reason is statistical significance: more iterations are needed for finance because the market environment is noisy filled with heavy-tail events. To reach statistical significance in this environment requires many more iterations on the GPU ML platform.
+</p> 
+<p style="width:75%">
+[Prime transactional platform for reliable production, on-line experiments, and back-tests] Financial data requires reliable, fast, and well-documented interfaces for transactions. This is the foundation for production and online experiments. The GPU serving of the RL model is required to be efficient, available, and developer friendly. Despite the wide interest in webservices and ML, financial transactions and ML infra is a black-box and secretive, usually custom built and maintained by hedge funds or banks. We build this infra to validate, serve and put our Foundational RL mode into production. We also make this available for ML practitioners at investor serving institutions and enterprises. 
+</p> 
+<h3 align="left">Reinforcement Learning Foundational Model</h3>
+[Engineering, data, algorithm excellence means a world of difference] We build an ambitious goal for the first foundational RL model for finance, while the accuracy to each second of financial data and each financial action to take is important. So engineering excellence, efficient algorithms and low-level data design means a word of difference to capture signals. Our ML infra is designed from the first line of code, till this date, each line was implemented, reviewed by the founders. 
+</p> 
 <h3 align="left">Sophon</h3>
 <p style="width:75%">
 Sophon is the agent that determines what users see. We use Sophon to discover, show interactive interfaces, run programs, and adapt to user's preference.
