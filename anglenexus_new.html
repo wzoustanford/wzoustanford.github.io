@@ -1027,7 +1027,7 @@
                 // Add response
                 const aMsg = document.createElement('div');
                 aMsg.className = 'd-msg assistant';
-                aMsg.innerHTML = `<div class="d-msg-content">${data.response || 'Error'}</div>`;
+                aMsg.innerHTML = `<div class="d-msg-content">${data.message || 'Error'}</div>`;
                 msgs.appendChild(aMsg);
                 
             } catch (e) {
