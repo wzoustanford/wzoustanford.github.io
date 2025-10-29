@@ -477,18 +477,18 @@
             transform: rotate(180deg);
         }
 
-        /* Fixed Daimon Chat Container */
+        /* Daimon Chat Container - Using working test approach */
         .daimon-chat-wrapper {
+            height: 0;
             overflow: hidden;
-            transition: all 0.5s ease;
-            max-height: 0;
-            opacity: 0;
-            margin-top: 30px;
+            transition: height 0.5s ease;
+            background: rgba(0,0,0,0.5);
+            border-radius: 20px;
+            margin-top: 20px;
         }
 
-        .daimon-chat-wrapper.active {
-            max-height: 500px;
-            opacity: 1;
+        .daimon-chat-wrapper.open {
+            height: 480px;
         }
 
         .daimon-chat-box {
@@ -780,17 +780,20 @@
     
     <!-- Floating Particles -->
     <script>
-        // Create floating particles
-        for (let i = 0; i < 20; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            particle.style.width = Math.random() * 4 + 2 + 'px';
-            particle.style.height = particle.style.width;
-            particle.style.left = Math.random() * 100 + '%';
-            particle.style.animationDelay = Math.random() * 20 + 's';
-            particle.style.animationDuration = Math.random() * 20 + 20 + 's';
-            document.body.appendChild(particle);
-        }
+        // Create floating particles after DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.width = Math.random() * 4 + 2 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.animationDuration = Math.random() * 20 + 20 + 's';
+                document.body.appendChild(particle);
+            }
+            console.log('Particles created');
+        });
     </script>
 
     <!-- Navigation -->
@@ -1033,168 +1036,142 @@
         });
 
         // ==========================================
-        // DAIMON CHAT FUNCTIONALITY - FIXED VERSION
+        // DAIMON CHAT - WORKING VERSION FROM TEST
         // ==========================================
         
-        // Configuration
-        const DAIMON_API_ENDPOINT = 'http://154.54.100.159/api/chat';
-        let daimonChatOpen = false;
-        let daimonConversationId = null;
-
-        // Get DOM elements
-        const daimonToggleBtn = document.getElementById('daimonToggleBtn');
-        const daimonChatWrapper = document.getElementById('daimonChatWrapper');
-        const daimonArrow = document.getElementById('daimonArrow');
-        const daimonMessages = document.getElementById('daimonMessages');
-        const daimonInput = document.getElementById('daimonInput');
-        const daimonSendBtn = document.getElementById('daimonSendBtn');
-        const daimonTyping = document.getElementById('daimonTyping');
-
-        // Toggle Daimon Chat
-        function toggleDaimonChat() {
-            daimonChatOpen = !daimonChatOpen;
+        // Wait for DOM to be ready
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, initializing Daimon chat...');
             
-            if (daimonChatOpen) {
-                daimonChatWrapper.classList.add('active');
-                daimonArrow.classList.add('open');
-                daimonToggleBtn.innerHTML = 'Hide Daimon <svg class="daimon-arrow open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>';
-                
-                // Focus input after animation
-                setTimeout(() => {
-                    daimonInput.focus();
-                }, 300);
-                
-                console.log('Daimon chat opened');
-            } else {
-                daimonChatWrapper.classList.remove('active');
-                daimonArrow.classList.remove('open');
-                daimonToggleBtn.innerHTML = 'Try Daimon <svg class="daimon-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>';
-                
-                console.log('Daimon chat closed');
-            }
-        }
-
-        // Add message to chat
-        function addDaimonMessage(text, isUser = false) {
-            // Remove welcome message if it exists
-            const welcome = daimonMessages.querySelector('.daimon-welcome');
-            if (welcome) {
-                welcome.remove();
+            // Configuration
+            const DAIMON_API = 'http://154.54.100.159/api/chat';
+            let daimonOpen = false;
+            let conversationId = null;
+            
+            // Get elements
+            const toggleBtn = document.getElementById('daimonToggleBtn');
+            const chatWrapper = document.getElementById('daimonChatWrapper');
+            const arrow = document.getElementById('daimonArrow');
+            const messages = document.getElementById('daimonMessages');
+            const input = document.getElementById('daimonInput');
+            const sendBtn = document.getElementById('daimonSendBtn');
+            const typing = document.getElementById('daimonTyping');
+            
+            // Check if elements exist
+            if (!toggleBtn || !chatWrapper) {
+                console.error('Daimon elements not found!');
+                return;
             }
             
-            // Create message element
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `daimon-message ${isUser ? 'user' : 'assistant'}`;
+            console.log('Daimon elements found:', {
+                toggleBtn: !!toggleBtn,
+                chatWrapper: !!chatWrapper,
+                arrow: !!arrow,
+                messages: !!messages
+            });
             
-            const contentDiv = document.createElement('div');
-            contentDiv.className = 'daimon-message-content';
-            contentDiv.textContent = text;
-            
-            messageDiv.appendChild(contentDiv);
-            
-            // Insert before typing indicator
-            const typing = daimonMessages.querySelector('.daimon-typing');
-            daimonMessages.insertBefore(messageDiv, typing);
-            
-            // Scroll to bottom
-            daimonMessages.scrollTop = daimonMessages.scrollHeight;
-        }
-
-        // Show/hide typing indicator
-        function showDaimonTyping(show) {
-            if (show) {
-                daimonTyping.classList.add('show');
-            } else {
-                daimonTyping.classList.remove('show');
+            // Toggle function - same as working test
+            function toggleDaimonChat() {
+                daimonOpen = !daimonOpen;
+                console.log('Toggle clicked. daimonOpen =', daimonOpen);
+                
+                if (daimonOpen) {
+                    chatWrapper.classList.add('open');
+                    if (arrow) arrow.classList.add('open');
+                    if (input) {
+                        setTimeout(() => input.focus(), 300);
+                    }
+                } else {
+                    chatWrapper.classList.remove('open');
+                    if (arrow) arrow.classList.remove('open');
+                }
             }
-        }
-
-        // Send message to Daimon API
-        async function sendToDaimon() {
-            const message = daimonInput.value.trim();
-            if (!message) return;
             
-            console.log('Sending to Daimon:', message);
-            
-            // Add user message
-            addDaimonMessage(message, true);
-            
-            // Clear input
-            daimonInput.value = '';
-            
-            // Disable input while processing
-            daimonInput.disabled = true;
-            daimonSendBtn.disabled = true;
-            
-            // Show typing indicator
-            showDaimonTyping(true);
-            
-            try {
-                // Make API call
-                const response = await fetch(DAIMON_API_ENDPOINT, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        message: message,
-                        conversation_id: daimonConversationId,
-                        timestamp: new Date().toISOString()
-                    })
-                });
+            // Add message
+            function addMessage(text, isUser) {
+                const welcome = messages.querySelector('.daimon-welcome');
+                if (welcome) welcome.remove();
                 
-                console.log('API Response status:', response.status);
+                const msgDiv = document.createElement('div');
+                msgDiv.className = `daimon-message ${isUser ? 'user' : 'assistant'}`;
+                msgDiv.innerHTML = `<div class="daimon-message-content">${text}</div>`;
                 
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+                if (typing) {
+                    messages.insertBefore(msgDiv, typing);
+                } else {
+                    messages.appendChild(msgDiv);
                 }
                 
-                const data = await response.json();
-                console.log('API Response data:', data);
+                messages.scrollTop = messages.scrollHeight;
+            }
+            
+            // Send message
+            async function sendMessage() {
+                const message = input.value.trim();
+                if (!message) return;
                 
-                // Store conversation ID if provided
-                if (data.conversation_id) {
-                    daimonConversationId = data.conversation_id;
+                console.log('Sending message:', message);
+                addMessage(message, true);
+                input.value = '';
+                input.disabled = true;
+                if (sendBtn) sendBtn.disabled = true;
+                
+                // Show typing
+                if (typing) typing.classList.add('show');
+                
+                try {
+                    const response = await fetch(DAIMON_API, {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({
+                            message: message,
+                            conversation_id: conversationId,
+                            timestamp: new Date().toISOString()
+                        })
+                    });
+                    
+                    const data = await response.json();
+                    if (data.conversation_id) conversationId = data.conversation_id;
+                    
+                    if (typing) typing.classList.remove('show');
+                    addMessage(data.response || 'I apologize, but I encountered an issue.', false);
+                    
+                } catch (error) {
+                    console.error('API Error:', error);
+                    if (typing) typing.classList.remove('show');
+                    addMessage('Connection error. Please try again.', false);
                 }
                 
-                // Hide typing indicator
-                showDaimonTyping(false);
-                
-                // Add Daimon's response
-                const daimonResponse = data.response || data.message || 'I apologize, but I encountered an issue processing your request.';
-                addDaimonMessage(daimonResponse, false);
-                
-            } catch (error) {
-                console.error('Daimon API Error:', error);
-                
-                // Hide typing indicator
-                showDaimonTyping(false);
-                
-                // Add error message
-                addDaimonMessage('I apologize, but I\'m having trouble connecting to my advisory system. Please check the connection and try again.', false);
-            } finally {
-                // Re-enable input
-                daimonInput.disabled = false;
-                daimonSendBtn.disabled = false;
-                daimonInput.focus();
+                input.disabled = false;
+                if (sendBtn) sendBtn.disabled = false;
+                input.focus();
             }
-        }
-
-        // Event Listeners
-        daimonToggleBtn.addEventListener('click', toggleDaimonChat);
-        
-        daimonSendBtn.addEventListener('click', sendToDaimon);
-        
-        daimonInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter' && !e.shiftKey) {
+            
+            // Attach event listeners
+            toggleBtn.addEventListener('click', function(e) {
                 e.preventDefault();
-                sendToDaimon();
+                e.stopPropagation();
+                toggleDaimonChat();
+            });
+            
+            if (sendBtn) {
+                sendBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    sendMessage();
+                });
             }
+            
+            if (input) {
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        sendMessage();
+                    }
+                });
+            }
+            
+            console.log('Daimon chat initialized successfully!');
         });
-
-        // Log for debugging
-        console.log('Daimon chat initialized');
-        console.log('API Endpoint:', DAIMON_API_ENDPOINT);
     </script>
 </body>
 </html>
