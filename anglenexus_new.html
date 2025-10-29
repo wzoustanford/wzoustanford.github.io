@@ -389,31 +389,16 @@
             border-radius: 25px;
             padding: 50px;
             position: relative;
-            overflow: hidden;
+            /* CRITICAL: Changed from 'overflow: hidden' to 'visible' to allow chat to expand */
+            overflow: visible;
             transition: all 0.4s ease;
         }
 
-        .agent-card::after {
-            content: '';
-            position: absolute;
-            top: -100%;
-            left: -100%;
-            width: 300%;
-            height: 300%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 40%);
-            transition: all 0.6s ease;
-            opacity: 0;
-        }
+        /* Removed the ::after animation that might interfere */
 
         .agent-card:hover {
             transform: scale(1.02);
             border-color: rgba(118, 75, 162, 0.5);
-        }
-
-        .agent-card:hover::after {
-            opacity: 1;
-            top: -50%;
-            left: -50%;
         }
 
         .agent-name {
@@ -426,7 +411,7 @@
             background-clip: text;
         }
 
-        /* Daimon Specific Styles - FIXED VERSION */
+        /* DAIMON SPECIFIC STYLES - ISOLATED NAMESPACE */
         .daimon-header {
             display: flex;
             justify-content: space-between;
@@ -446,7 +431,7 @@
             margin-bottom: 20px;
         }
 
-        .try-daimon-btn {
+        #daimonBtn {
             background: var(--primary-gradient);
             color: white;
             border: none;
@@ -460,49 +445,49 @@
             gap: 8px;
             transition: all 0.3s ease;
             box-shadow: 0 10px 30px rgba(118, 75, 162, 0.3);
+            position: relative;
+            z-index: 10;
         }
 
-        .try-daimon-btn:hover {
+        #daimonBtn:hover {
             transform: translateY(-2px);
             box-shadow: 0 15px 40px rgba(118, 75, 162, 0.4);
         }
 
-        .daimon-arrow {
+        #daimonArr {
             width: 16px;
             height: 16px;
             transition: transform 0.3s ease;
         }
 
-        .daimon-arrow.open {
+        #daimonArr.rot {
             transform: rotate(180deg);
         }
 
-        /* Daimon Chat Container - Using working test approach */
-        .daimon-chat-wrapper {
+        /* Daimon Chat Box */
+        #daimonBox {
             height: 0;
             overflow: hidden;
             transition: height 0.5s ease;
-            background: rgba(0,0,0,0.5);
-            border-radius: 20px;
             margin-top: 20px;
         }
 
-        .daimon-chat-wrapper.open {
-            height: 480px;
+        #daimonBox.show {
+            height: 450px;
         }
 
-        .daimon-chat-box {
-            background: rgba(10, 10, 10, 0.6);
+        .d-chat-inner {
+            background: rgba(10, 10, 10, 0.8);
             border: 1px solid var(--glass-border);
             border-radius: 20px;
             padding: 20px;
-            height: 450px;
+            height: 420px;
             display: flex;
             flex-direction: column;
             backdrop-filter: blur(10px);
         }
 
-        .daimon-chat-header {
+        .d-chat-header {
             background: var(--primary-gradient);
             margin: -20px -20px 20px -20px;
             padding: 15px 20px;
@@ -512,12 +497,11 @@
             gap: 10px;
         }
 
-        .daimon-status-dot {
+        .d-status {
             width: 10px;
             height: 10px;
             background: #4ade80;
             border-radius: 50%;
-            box-shadow: 0 0 10px rgba(74, 222, 128, 0.5);
             animation: pulse 2s infinite;
         }
 
@@ -526,7 +510,7 @@
             50% { opacity: 0.5; }
         }
 
-        .daimon-messages {
+        #daimonMsgs {
             flex: 1;
             overflow-y: auto;
             padding: 15px;
@@ -535,91 +519,47 @@
             margin-bottom: 15px;
         }
 
-        .daimon-welcome {
+        .d-welcome {
             text-align: center;
             color: var(--text-secondary);
             padding: 40px;
         }
 
-        .daimon-message {
+        .d-msg {
             margin-bottom: 15px;
             display: flex;
             animation: fadeInUp 0.3s ease;
         }
 
-        .daimon-message.user {
+        .d-msg.user {
             justify-content: flex-end;
         }
 
-        .daimon-message-content {
+        .d-msg-content {
             max-width: 70%;
             padding: 12px 18px;
             border-radius: 20px;
             font-size: 15px;
         }
 
-        .daimon-message.user .daimon-message-content {
+        .d-msg.user .d-msg-content {
             background: var(--primary-gradient);
             color: white;
             border-bottom-right-radius: 5px;
         }
 
-        .daimon-message.assistant .daimon-message-content {
+        .d-msg.assistant .d-msg-content {
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid var(--glass-border);
             border-bottom-left-radius: 5px;
         }
 
-        .daimon-typing {
-            display: none;
-            padding: 12px 18px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            border-bottom-left-radius: 5px;
-            width: fit-content;
-            margin-bottom: 15px;
-        }
-
-        .daimon-typing.show {
-            display: inline-flex;
-            gap: 4px;
-            align-items: center;
-        }
-
-        .typing-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--text-secondary);
-            border-radius: 50%;
-            animation: typing 1.4s infinite;
-        }
-
-        .typing-dot:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        .typing-dot:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-
-        @keyframes typing {
-            0%, 80%, 100% {
-                transform: scale(1);
-                opacity: 0.5;
-            }
-            40% {
-                transform: scale(1.2);
-                opacity: 1;
-            }
-        }
-
-        .daimon-input-container {
+        .d-input-wrap {
             display: flex;
             gap: 10px;
         }
 
-        .daimon-input {
+        #daimonIn {
             flex: 1;
             padding: 12px 20px;
             background: rgba(255, 255, 255, 0.05);
@@ -628,19 +568,18 @@
             color: white;
             font-size: 15px;
             outline: none;
-            transition: all 0.3s ease;
         }
 
-        .daimon-input::placeholder {
+        #daimonIn::placeholder {
             color: var(--text-secondary);
         }
 
-        .daimon-input:focus {
+        #daimonIn:focus {
             background: rgba(255, 255, 255, 0.08);
             border-color: rgba(118, 75, 162, 0.5);
         }
 
-        .daimon-send {
+        #daimonSnd {
             background: var(--primary-gradient);
             color: white;
             border: none;
@@ -648,15 +587,14 @@
             border-radius: 50px;
             cursor: pointer;
             font-weight: 600;
-            transition: all 0.3s ease;
         }
 
-        .daimon-send:hover:not(:disabled) {
+        #daimonSnd:hover:not(:disabled) {
             transform: translateY(-2px);
             box-shadow: 0 10px 30px rgba(118, 75, 162, 0.3);
         }
 
-        .daimon-send:disabled {
+        #daimonSnd:disabled {
             opacity: 0.5;
             cursor: not-allowed;
         }
@@ -732,7 +670,7 @@
                 gap: 15px;
             }
 
-            .try-daimon-btn {
+            #daimonBtn {
                 width: 100%;
                 justify-content: center;
             }
@@ -770,7 +708,6 @@
             filter: blur(10px);
             opacity: 0.5;
             z-index: -1;
-            animation: pulse 2s ease-in-out infinite;
         }
     </style>
 </head>
@@ -778,23 +715,12 @@
     <!-- Animated Background -->
     <div class="bg-animation"></div>
     
-    <!-- Floating Particles -->
-    <script>
-        // Create floating particles after DOM is ready
-        document.addEventListener('DOMContentLoaded', function() {
-            for (let i = 0; i < 20; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.width = Math.random() * 4 + 2 + 'px';
-                particle.style.height = particle.style.width;
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 20 + 's';
-                particle.style.animationDuration = Math.random() * 20 + 20 + 's';
-                document.body.appendChild(particle);
-            }
-            console.log('Particles created');
-        });
-    </script>
+    <!-- Simple particles -->
+    <div class="particle" style="width: 3px; height: 3px; left: 10%; animation-delay: 0s;"></div>
+    <div class="particle" style="width: 2px; height: 2px; left: 20%; animation-delay: 2s;"></div>
+    <div class="particle" style="width: 4px; height: 4px; left: 30%; animation-delay: 4s;"></div>
+    <div class="particle" style="width: 3px; height: 3px; left: 40%; animation-delay: 6s;"></div>
+    <div class="particle" style="width: 2px; height: 2px; left: 50%; animation-delay: 8s;"></div>
 
     <!-- Navigation -->
     <nav id="navbar">
@@ -882,7 +808,7 @@
         </div>
         
         <div class="agents-container">
-            <!-- Daimon Agent (NEW - First Position) -->
+            <!-- Daimon Agent (First) - SIMPLIFIED -->
             <div class="agent-card">
                 <div class="daimon-header">
                     <div class="daimon-title-section">
@@ -890,41 +816,36 @@
                         <p class="greek-subtitle">δαίμων - advisor spirit</p>
                         <p>Your intelligent advisory companion powered by advanced language understanding. Daimon provides thoughtful guidance, answers complex questions, and assists with analytical tasks through natural conversation.</p>
                     </div>
-                    <button class="try-daimon-btn" id="daimonToggleBtn">
+                    <button id="daimonBtn" onclick="toggleDaimon()">
                         Try Daimon
-                        <svg class="daimon-arrow" id="daimonArrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg id="daimonArr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <polyline points="6 9 12 15 18 9"></polyline>
                         </svg>
                     </button>
                 </div>
                 
-                <div class="daimon-chat-wrapper" id="daimonChatWrapper">
-                    <div class="daimon-chat-box">
-                        <div class="daimon-chat-header">
-                            <div class="daimon-status-dot"></div>
+                <div id="daimonBox">
+                    <div class="d-chat-inner">
+                        <div class="d-chat-header">
+                            <div class="d-status"></div>
                             <span style="font-weight: 600;">Daimon Advisory Interface</span>
-                            <span style="margin-left: auto; font-size: 14px; opacity: 0.9;">Connected: 154.54.100.159</span>
+                            <span style="margin-left: auto; font-size: 14px; opacity: 0.9;">Connected: </span>
                         </div>
-                        <div class="daimon-messages" id="daimonMessages">
-                            <div class="daimon-welcome">
+                        <div id="daimonMsgs">
+                            <div class="d-welcome">
                                 <h4 style="margin-bottom: 10px;">Welcome to Daimon</h4>
                                 <p>Your advisor spirit is ready to assist you.</p>
                             </div>
-                            <div class="daimon-typing" id="daimonTyping">
-                                <div class="typing-dot"></div>
-                                <div class="typing-dot"></div>
-                                <div class="typing-dot"></div>
-                            </div>
                         </div>
-                        <div class="daimon-input-container">
-                            <input type="text" class="daimon-input" id="daimonInput" placeholder="Ask Daimon for guidance...">
-                            <button class="daimon-send" id="daimonSendBtn">Send</button>
+                        <div class="d-input-wrap">
+                            <input type="text" id="daimonIn" placeholder="Ask Daimon for guidance..." onkeypress="if(event.key==='Enter')sendDaimon()">
+                            <button id="daimonSnd" onclick="sendDaimon()">Send</button>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <!-- Sophon Agent (Original - Now Second) -->
+            <!-- Sophon Agent (Second) -->
             <div class="agent-card">
                 <h3 class="agent-name">Sophon</h3>
                 <p>The interface agent that determines what users see. Sophon discovers, shows interactive interfaces, runs programs, and adapts to user preferences.</p>
@@ -934,7 +855,7 @@
                 </div>
             </div>
             
-            <!-- Weaver Agent (Original - Now Third) -->
+            <!-- Weaver Agent (Third) -->
             <div class="agent-card">
                 <h3 class="agent-name">Weaver</h3>
                 <p>The information agent that weaves a web of connections between user questions and the most up-to-date information sources.</p>
@@ -987,8 +908,83 @@
         </div>
     </footer>
 
+    <!-- ISOLATED DAIMON SCRIPT -->
     <script>
-        // Navbar scroll effect
+        // Daimon functionality - completely isolated
+        let dOpen = false;
+        
+        function toggleDaimon() {
+            const box = document.getElementById('daimonBox');
+            const arr = document.getElementById('daimonArr');
+            
+            dOpen = !dOpen;
+            console.log('Daimon toggle:', dOpen);
+            
+            if (dOpen) {
+                box.className = 'show';
+                arr.className = 'rot';
+                setTimeout(() => {
+                    document.getElementById('daimonIn').focus();
+                }, 300);
+            } else {
+                box.className = '';
+                arr.className = '';
+            }
+        }
+        
+        async function sendDaimon() {
+            const input = document.getElementById('daimonIn');
+            const msgs = document.getElementById('daimonMsgs');
+            const text = input.value.trim();
+            
+            if (!text) return;
+            
+            // Remove welcome
+            const w = msgs.querySelector('.d-welcome');
+            if (w) w.remove();
+            
+            // Add user message
+            const uMsg = document.createElement('div');
+            uMsg.className = 'd-msg user';
+            uMsg.innerHTML = `<div class="d-msg-content">${text}</div>`;
+            msgs.appendChild(uMsg);
+            
+            input.value = '';
+            input.disabled = true;
+            
+            // API call
+            try {
+                const res = await fetch('http://154.54.100.159/api/chat', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        message: text,
+                        conversation_id: null,
+                        timestamp: new Date().toISOString()
+                    })
+                });
+                
+                const data = await res.json();
+                
+                // Add response
+                const aMsg = document.createElement('div');
+                aMsg.className = 'd-msg assistant';
+                aMsg.innerHTML = `<div class="d-msg-content">${data.response || 'Error'}</div>`;
+                msgs.appendChild(aMsg);
+                
+            } catch (e) {
+                const eMsg = document.createElement('div');
+                eMsg.className = 'd-msg assistant';
+                eMsg.innerHTML = `<div class="d-msg-content">Connection error</div>`;
+                msgs.appendChild(eMsg);
+            }
+            
+            input.disabled = false;
+            input.focus();
+            msgs.scrollTop = msgs.scrollHeight;
+        }
+        
+        // Navbar scroll
         window.addEventListener('scroll', function() {
             const navbar = document.getElementById('navbar');
             if (window.scrollY > 50) {
@@ -997,181 +993,8 @@
                 navbar.classList.remove('scrolled');
             }
         });
-
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Intersection Observer for fade-in animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        // Apply observer to all sections
-        document.querySelectorAll('section').forEach(section => {
-            section.style.opacity = '0';
-            section.style.transform = 'translateY(30px)';
-            section.style.transition = 'all 0.8s ease-out';
-            observer.observe(section);
-        });
-
-        // ==========================================
-        // DAIMON CHAT - WORKING VERSION FROM TEST
-        // ==========================================
         
-        // Wait for DOM to be ready
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM loaded, initializing Daimon chat...');
-            
-            // Configuration
-            const DAIMON_API = 'http://154.54.100.159/api/chat';
-            let daimonOpen = false;
-            let conversationId = null;
-            
-            // Get elements
-            const toggleBtn = document.getElementById('daimonToggleBtn');
-            const chatWrapper = document.getElementById('daimonChatWrapper');
-            const arrow = document.getElementById('daimonArrow');
-            const messages = document.getElementById('daimonMessages');
-            const input = document.getElementById('daimonInput');
-            const sendBtn = document.getElementById('daimonSendBtn');
-            const typing = document.getElementById('daimonTyping');
-            
-            // Check if elements exist
-            if (!toggleBtn || !chatWrapper) {
-                console.error('Daimon elements not found!');
-                return;
-            }
-            
-            console.log('Daimon elements found:', {
-                toggleBtn: !!toggleBtn,
-                chatWrapper: !!chatWrapper,
-                arrow: !!arrow,
-                messages: !!messages
-            });
-            
-            // Toggle function - same as working test
-            function toggleDaimonChat() {
-                daimonOpen = !daimonOpen;
-                console.log('Toggle clicked. daimonOpen =', daimonOpen);
-                
-                if (daimonOpen) {
-                    chatWrapper.classList.add('open');
-                    if (arrow) arrow.classList.add('open');
-                    if (input) {
-                        setTimeout(() => input.focus(), 300);
-                    }
-                } else {
-                    chatWrapper.classList.remove('open');
-                    if (arrow) arrow.classList.remove('open');
-                }
-            }
-            
-            // Add message
-            function addMessage(text, isUser) {
-                const welcome = messages.querySelector('.daimon-welcome');
-                if (welcome) welcome.remove();
-                
-                const msgDiv = document.createElement('div');
-                msgDiv.className = `daimon-message ${isUser ? 'user' : 'assistant'}`;
-                msgDiv.innerHTML = `<div class="daimon-message-content">${text}</div>`;
-                
-                if (typing) {
-                    messages.insertBefore(msgDiv, typing);
-                } else {
-                    messages.appendChild(msgDiv);
-                }
-                
-                messages.scrollTop = messages.scrollHeight;
-            }
-            
-            // Send message
-            async function sendMessage() {
-                const message = input.value.trim();
-                if (!message) return;
-                
-                console.log('Sending message:', message);
-                addMessage(message, true);
-                input.value = '';
-                input.disabled = true;
-                if (sendBtn) sendBtn.disabled = true;
-                
-                // Show typing
-                if (typing) typing.classList.add('show');
-                
-                try {
-                    const response = await fetch(DAIMON_API, {
-                        method: 'POST',
-                        headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify({
-                            message: message,
-                            conversation_id: conversationId,
-                            timestamp: new Date().toISOString()
-                        })
-                    });
-                    
-                    const data = await response.json();
-                    if (data.conversation_id) conversationId = data.conversation_id;
-                    
-                    if (typing) typing.classList.remove('show');
-                    addMessage(data.response || 'I apologize, but I encountered an issue.', false);
-                    
-                } catch (error) {
-                    console.error('API Error:', error);
-                    if (typing) typing.classList.remove('show');
-                    addMessage('Connection error. Please try again.', false);
-                }
-                
-                input.disabled = false;
-                if (sendBtn) sendBtn.disabled = false;
-                input.focus();
-            }
-            
-            // Attach event listeners
-            toggleBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                toggleDaimonChat();
-            });
-            
-            if (sendBtn) {
-                sendBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    sendMessage();
-                });
-            }
-            
-            if (input) {
-                input.addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter') {
-                        e.preventDefault();
-                        sendMessage();
-                    }
-                });
-            }
-            
-            console.log('Daimon chat initialized successfully!');
-        });
+        console.log('AngleNexus with Daimon loaded');
     </script>
 </body>
 </html>
